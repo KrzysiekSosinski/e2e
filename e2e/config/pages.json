@@ -1,0 +1,5 @@
+{
+  "ngfp-host": {
+    "route": "/flights-list"
+  }
+}

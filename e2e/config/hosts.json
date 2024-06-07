@@ -1,0 +1,4 @@
+{
+  "localhost" : "http://localhost:4200",
+  "ci-run": "http://ngfp-web:8081"
+}
