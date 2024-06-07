@@ -1,0 +1,38 @@
+version: '3.5'
+
+services:
+  ngfp-web:
+    image: ngfp-web:${SHA_TAG}
+    container_name: ngfp-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        SHA_TAG: ${SHA_TAG}
+    ports:
+      - "8081:8081"
+    networks:
+      - frontend
+
+  e2e-test:
+    image: e2e-test:${SHA_TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile-e2e
+    environment:
+      - UI_AUTOMATION_HOST=ci-run
+      - HEADLESS=true
+      - UI_AUTOMATION_BROWSER=firefox
+      - TEST_TAG=smoke
+    depends_on:
+      - ngfp-web
+    volumes:
+      - test-report:/e2e/reports
+    networks:
+      - frontend
+
+volumes:
+  test-report:
+
+networks:
+  frontend:
